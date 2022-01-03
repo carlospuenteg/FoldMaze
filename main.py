@@ -3,30 +3,32 @@ import random
 
 ########################################################
 
-b = "0123456789abcdef"
-bLen = len(b)
-foldName = "FOLDMAZE"
-path = "newFolders/"+foldName+"/"
+def createMaze():
+    b = "0123456789abcdef"
+    bLen = len(b)
+    pathLen = 3
+    
+    print("\nFirst of all, check that your file is in the 'file' folder\n")
+    folderName = input("Name of the folder: ") #"FOLDMAZE"
+    path = "newFolders/"+folderName+"/"
+    os.mkdir(path)
 
-os.mkdir(path)
+    fileName = "".join(x for x in os.listdir("file") if x!="example.txt")
 
-fileName = "myGit.txt"
-fileContent = "https://github.com/Fisherman386"
+    myPath = path
+    for x in range(pathLen):
+        myPath += random.choice(b)+"/"
 
-strLen = 3
+    for x in range(bLen):
+        os.mkdir(path+b[x]) # path/a
+        for y in range(bLen):
+            os.mkdir(path+b[x]+"/"+b[y])
+            for z in range(bLen):
+                os.mkdir(path+b[x]+"/"+b[y]+"/"+b[z])
 
-myPath = path
-for x in range(strLen):
-    myPath += random.choice(b)+"/"
+    os.replace("file/"+fileName, myPath+fileName)
+    print("File path: "+myPath+fileName)
 
-for x in range(bLen):
-    os.mkdir(path+b[x]) # path/a
-    for y in range(bLen):
-        os.mkdir(path+b[x]+"/"+b[y])
-        for z in range(bLen):
-            os.mkdir(path+b[x]+"/"+b[y]+"/"+b[z])
+########################################################
 
-f = open(myPath+fileName, "x")
-f.write(fileContent)
-
-print(myPath+fileName)
+createMaze()
